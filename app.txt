@@ -1,0 +1,24 @@
+﻿App Name: CatLog Diary
+Version: 1.0.0
+Platform: Android / iOS
+Category: Pet Health / Lifestyle
+Target Market: Global
+Price Model: Free + $3.99/month Pro
+
+Description:
+A health tracking app optimized exclusively for cats to log litter-box frequency, precise weight curves, food intake, and medication intervals. Built for devoted cat owners.
+
+Key Features:
+- Multi-cat profile management (photos, breed, birthday)
+- Daily litter-box log: frequency, consistency, color (health indicators)
+- Weight tracking with chart over time (flag sudden changes)
+- Food log: brand, portion size, wet vs dry, calories
+- Medication and supplement scheduler with reminders
+- Vet visit history with notes and document storage
+- Heat/season cycle tracker for unspayed females
+- Monthly health summary PDF export for vet appointments
+- Water intake estimator based on food type
+
+Target Audience: Cat owners aged 20-45, multi-cat households, cat breeders
+Competitors: 11pets, PetDesk, VitusVet
+Unique Value: Feline-specific health metrics not found in generic pet trackers

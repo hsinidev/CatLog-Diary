@@ -1,0 +1,143 @@
+﻿{
+  "prompt_metadata": {
+    "app_name": "CatLog Diary - Advanced Feline Health Tracker & Care Scheduler",
+    "tagline": "Log litter habits, monitor weight curves, and secure medication intervals.",
+    "target_platform": "Android (Kotlin + Jetpack Compose)",
+    "language": "Kotlin",
+    "ui_framework": "Jetpack Compose (Material Design 3)",
+    "architecture_pattern": "MVVM + Clean Architecture + MVI for Log & Scheduler States",
+    "build_system": "Gradle Kotlin DSL (Version Catalogs)",
+    "min_sdk": 26,
+    "target_sdk": 34,
+    "category": "Pet Health & Lifestyle / Analytics",
+    "monetization": "Hybrid: Free (Log up to 2 cats, standard weight log entry, basic litter notifications + AdMob Banner/Interstitial Ads) | Premium Pro ($3.99/mo subscription or $19.99 lifetime purchase to unlock unlimited cat profiles, high-fidelity dynamic weight/health canvas charts, multi-device cloud sync, automated smart medication notification loops, vet report PDF exports, and an ad-free clean experience)"
+  },
+  "agent_instructions": {
+    "role": "You are a Principal Android Engineer and Pet Care Technical Architect. Your goal is to design 'CatLog Diary', a highly optimized, offline-first application for dedicated cat owners to capture litter-box events, visualize precise multi-cat weight curves, monitor food/water intake logs, and guarantee strict medication schedules with low-latency responsiveness.",
+    "design_philosophy": "Gentle, clean, and highly intuitive. Feline healthcare tracking requires zero-friction data entry so users can log events in a single hand tap. The user interface must feature soft, warm palettes, cat-inspired visual tokens, fluid animation transitions, and clear analytical charts that prioritize diagnostic readability for vet consultations.",
+    "code_standards": [
+      "Strict Clean Architecture boundaries: Presentation (Compose UI, ViewModels, MVI Intents), Domain (Feline Health UseCases, Analytics Math Rules, Notification Contracts), and Data (Room DB with dynamic schema migrations, DataStore, AlarmManager wrappers).",
+      "Dynamic MVI state tracking utilizing Kotlin StateFlows to keep UI charts, medication progress checklists, and weight sliders synchronized across tabs.",
+      "Reliable local notification scheduling using Android's AlarmManager combined with WorkManager for persistent medication/insulin alarms.",
+      "Optimized offline-first storage utilizing Room, maintaining high-resolution logs, timeline events, and local media attachments (symptom photos) without blocking the UI main thread."
+    ]
+  },
+  "product_specification": {
+    "core_mechanics": {
+      "multi_cat_profile_engine": {
+        "description": "Manage individual feline health baselines securely in isolated data containers.",
+        "features": [
+          "Dynamic Cat Registration: Support logging breed (loaded from local JSON), birthdate, gender, microchip ID, sterilization status, and activity baseline.",
+          "Profile Avatar Processor: Build an interactive image selection and circular cropper tool, saving optimized profile thumbnails directly to local app storage."
+        ]
+      },
+      "litter_box_tracker_engine": {
+        "description": "Log, categorize, and flag litter-box patterns to identify early signs of FLUTD or other urinary anomalies.",
+        "features": [
+          "Granular Event Logging: Capture urine/stool markers with consistency scales (Bristol Stool Chart adapted for cats), relative volume sliders, and dynamic anomaly indicators (blood presence, excessive straining).",
+          "Automated Anomaly Flags: Write domain-level rules that analyze temporal frequency anomalies (e.g., logging urine events >4 times in 12 hours) and fire highly visible, non-alarmist health suggestions to consult a veterinarian."
+        ]
+      },
+      "precision_weight_analytics_curve": {
+        "description": "Custom-rendered, interactive spline graphs tracking subtle weight deviations crucial for feline disease detection.",
+        "charts": [
+          "Feline Weight Trend: A smooth cubic spline line chart displaying weight fluctuations over weekly, monthly, and yearly intervals.",
+          "Feline BMI & Target Range: Draw visual boundary bands on the canvas representing the cat's target weight range, calculating percentage losses or gains interactively.",
+          "Log Distribution: A segmented radial donut chart mapping food intake types (Dry, Wet, Raw, Treats)."
+        ]
+      },
+      "medication_and_insulin_scheduler": {
+        "description": "An iron-clad, exact alarm manager tracking life-critical feline medications.",
+        "features": [
+          "Exact Alarm Dispatcher: Inject recurring exact alarms utilizing Android's AlarmManager.setExactAndAllowWhileIdle to guarantee critical insulin or thyroid notifications fire on time.",
+          "Compliance Checklist: Create daily calendar sheets with touch-interactive checkboxes that log doses administered, logging metadata (dosage, administrator, and timestamp) in Room."
+        ]
+      },
+      "admob_monetization_layer": {
+        "banner_ads": "Collapsible smart banners integrated at the bottom of the History Log and Analytics Dashboard screens (suppressed in Pro).",
+        "interstitial_ads": "Triggered gracefully after successfully adding a new weight log or litter-box event (frequency capped to 1 ad per 10 minutes to protect the user experience).",
+        "rewarded_ads": "Watch an ad to unlock high-resolution veterinary PDF exports or premium food nutrition analyzers for 24 hours.",
+        "consent_platform": "Integrate the Google User Messaging Platform (UMP) SDK to handle fully compliant, international GDPR and ePrivacy consent loops."
+      }
+    }
+  },
+  "technical_specification": {
+    "key_permissions": [
+      "android.permission.READ_MEDIA_IMAGES (Required for choosing profile pictures and logging symptom photos on SDK 33+)",
+      "android.permission.POST_NOTIFICATIONS (Crucial to fire medication and health reminder alerts on SDK 33+)",
+      "android.permission.SCHEDULE_EXACT_ALARM (Required for scheduled critical insulin alarms on Android 13+)",
+      "android.permission.USE_EXACT_ALARM (Required for Android 14+ policies on medication-specific scheduling)",
+      "android.permission.INTERNET (For processing Google Play Billing, loading AdMob ads, and syncing databases)"
+    ],
+    "module_architecture": {
+      "app": "Application initialization, Hilt module graphs, dynamic provider bindings, and safe NavHost controllers.",
+      "core_ui": "Feline-focused design tokens (Warm Salmon Pink, Soft Calico Cream, Cool Mint Green), custom path charts, and spring animation interpolators.",
+      "feature_profile": "Profile creator views, breed dictionaries, avatar croppers, and local storage picture repositories.",
+      "feature_tracker": "Litter-box logging sheets, food/water calculators, symptom photo binders, and anomaly logic checkers.",
+      "feature_scheduler": "AlarmManager receivers, recurring interval calculators, dosage logs, and completion checkers.",
+      "feature_analytics": "Custom Canvas charts (feline weight splines, food segment rings), vet-ready PDF exporter engines, and data CSV builders.",
+      "feature_pro": "Google Play Billing 6.x wrappers, dynamic tier comparison widgets, premium widget builders, and paywall screens."
+    },
+    "state_management_details": {
+      "catlog_state_machine": {
+        "state_model": "data class CatLogState(val registeredCats: List, val selectedCat: Cat?, val activeWeightLogs: List, val activeLitterLogs: List, val scheduledMeds: List, val isPro: Boolean, val uiMode: CatLogUiMode)",
+        "ui_mode": "enum class CatLogUiMode { CAT_DASHBOARD, ADD_LOG_FORM, ANALYTICS_PANEL, MEDS_CHEDULE, PAYWALL }"
+      }
+    },
+    "core_dependencies": {
+      "jetpack_compose": "androidx.compose.ui:ui:1.6.x (including foundation, material3, and dynamic graphic animations)",
+      "database_orm": "androidx.room:room-runtime:2.6.x & room-compiler (supporting Coroutines/Flow queries and auto-migrations)",
+      "dependency_injection": "com.google.dagger:hilt-android:2.51 & hilt-navigation-compose",
+      "data_caching": "androidx.datastore:datastore-preferences:1.0.x (For fast, lightweight target preferences)",
+      "background_runtime": "androidx.work:work-runtime-ktx:2.9.x",
+      "billing": "com.android.billingclient:billing-ktx:6.2.0 (Google Play Billing Engine)",
+      "monetization": "com.google.android.gms:play-services-ads:23.x.x (AdMob SDK)",
+      "consent_sdk": "com.google.android.ump:user-messaging-platform:2.2.x (User Consent Collection)"
+    },
+    "ui_ux_design": {
+      "theme_color_palette": {
+        "primary": "#E76F51 (Warm Salmon Terracotta - representing feline playfulness)",
+        "secondary": "#E9C46A (Soft Calico Amber - representing warm fur and light)",
+        "accent": "#2A9D8F (Cool Sage Mint - representing health, diagnostic clarity, and clean litter)",
+        "background": "#FDFBF7 (Warm Cream/Sand - designed to avoid visual clinical anxiety)",
+        "surface": "#FFFFFF (Pure White)",
+        "on_background": "#264653 (Deep Ocean Slate - utilized for high-contrast typography)"
+      },
+      "design_notes": "A calming, warm cat-themed dark mode is available ('background': '#121B20', 'surface': '#1C2930', 'on_surface': '#ECEFF1'). Spacing must prioritize wide tap targets (minimum 48dp) for rapid, single-handed input while handling cats."
+    }
+  },
+  "execution_roadmap": [
+    {
+      "phase_1": "Project Scaffolding & Multi-Cat Data Architecture",
+      "description": "Establish multi-module structure utilizing clean architecture guidelines. Scaffold Hilt containers, set up Kotlin Version Catalogs, prepare Type-Safe Compose Navigation routes, and initialize Room schema structures for cats, litter habits, weights, and medications."
+    },
+    {
+      "phase_2": "Feline Profiles & Dynamic Avatar Processing",
+      "description": "Implement the cat registration flow. Develop an asynchronous image selection, compression, and scaling pipeline to generate profile avatars and save paths inside the Room database schema safely."
+    },
+    {
+      "phase_3": "The Litter-Box & Symptoms Log Engine",
+      "description": "Develop the litter-box logging sheets. Write local domain evaluators to track daily frequency thresholds, dynamic consistency flags, and trigger diagnostic flags to warning panels if threshold limits are breached."
+    },
+    {
+      "phase_4": "Weight Trends: Custom Canvas Spline Charts",
+      "description": "Build high-performance, clean-code mathematical coordinate drawing utilities on standard Jetpack Compose Canvas. Render dynamic weight lines, cubic splines, range indicators, and segmented food consumption donut rings with interactive tooltips."
+    },
+    {
+      "phase_5": "Exact Scheduler & AlarmManager Hooks",
+      "description": "Develop the exact alarm scheduling engine. Hook into AlarmManager with strict Android 13/14 permissions compliance. Orchestrate localized push notifications linked to dose event checkers to ensure high compliance with medication windows."
+    },
+    {
+      "phase_6": "AdMob SDK & GDPR Consent Framework",
+      "description": "Initialize the Google User Messaging Platform (UMP) SDK. Construct modular Compose container overlays to request location/privacy consent loops before initializing the AdMob SDK. Inject responsive Anchor adaptive Banners and custom-capped Interstitial triggers."
+    },
+    {
+      "phase_7": "Google Play Billing 6.x Premium Paywall",
+      "description": "Build the Google Play Billing subscription repository. Construct a modern, visually striking Pro Paywall featuring dynamic cards, comparison grids, and spring transition animations that bypasses AdMob overlays upon transaction validation."
+    },
+    {
+      "phase_8": "Performance Tuning, CSV Exporter & Store Preparation",
+      "description": "Measure and optimize database fetch times for high-volume logs. Implement vet-ready CSV and PDF data export pipelines. Profile garbage collection behavior during Canvas weight spline renderings and build the signed production release bundle."
+    }
+  ]
+}
